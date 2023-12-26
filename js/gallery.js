@@ -113,7 +113,7 @@ const images = [
             </a>
     `, {
         onShow: (instance) => {
-            instance.element().querySelector('a').onclick = instance.close
+            instance.element().querySelector('img').onclick = instance.close
         }
     })
     
