@@ -69,7 +69,7 @@ const images = [
   const gallery = document.querySelector('.gallery')
   const fragment = document.createDocumentFragment();
 
-  for (let image of images) {
+  images.forEach((image) => {
     const galleryItem = document.createElement('li');
     galleryItem.classList.add('gallery-item');
 
@@ -90,7 +90,7 @@ const images = [
     galleryItem.append(galleryLink);
     galleryLink.append(galleryImage);
     fragment.append(galleryItem);
-  }
+  })
 
   gallery.append(fragment);
 
@@ -103,11 +103,24 @@ const images = [
 
     if (clickImg.tagName === 'IMG') {
         const imageUrl = clickImg.dataset.source;
-        const instance = basicLightbox.create(`<img src="${imageUrl}">`);
-        instance.show();
-
         
-        const handleKeyPress = (event) => {
+        const instance = basicLightbox.create(`
+        <a class='gallary'>
+           <li class="gallery-item">
+             <a class="gallery-link">
+             <img src="${imageUrl}"></a>
+              </li>
+            </a>
+    `, {
+        onShow: (instance) => {
+            instance.element().querySelector('a').onclick = instance.close
+        }
+    })
+    
+    instance.show()
+
+
+     const handleKeyPress = (event) => {
           console.log(event.code);
            
           if (event.code === 'Escape') { 
@@ -121,6 +134,3 @@ const images = [
         document.addEventListener('keydown', handleKeyPress);
     }
 });
-
-
-
